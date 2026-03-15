@@ -14,12 +14,13 @@ def simulate_sentiment():
 class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-parsed = urllib.parse.urlparse(self.path)
-params = urllib.parse.parse_qs(parsed.query)
-brand = params.get("brand", [""])[0]
-if brand:
-pos, neu, neg, reddit, x = simulate_sentiment()
-content = f"""
+     parsed = urllib.parse.urlparse(self.path)
+     params = urllib.parse.parse_qs(parsed.query)
+     brand = params.get("brand", [""])[0]
+     if brand:
+        pos, neu, neg, reddit, x = simulate_sentiment()
+        content = f"""
+   
 <html>
 <head>
 <title>Sentiment Dashboard</title>
@@ -66,7 +67,9 @@ self.send_header("Content-type", "text/html")
 self.end_headers()
 self.wfile.write(content.encode())
 port = int(os.environ.get("PORT", 10000))
+
 print("Server running on port", port)
+
 server = HTTPServer(("0.0.0.0", port), Handler)
 server.serve_forever()
 
