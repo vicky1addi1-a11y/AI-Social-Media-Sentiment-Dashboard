@@ -41,6 +41,7 @@ content = f"""
 <a href="/">Back to Dashboard</a>
 </body>
 </html>
+"""
 else:
 content = """
 <html>
