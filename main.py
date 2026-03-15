@@ -51,7 +51,7 @@ content = """
 <h1>AI Social Media Sentiment Dashboard</h1>
 <form method="GET">
 <label>Enter Brand or Keyword</label><br><br>
-<input type="text" name="brand" placeholder="Example: Nike" style="padding:8px; width:300px;
+<input type="text" name="brand" placeholder="Example: Nike" style="padding:8px; width:300px;">
 <button type="submit" style="padding:8px;">Analyze</button>
 </form>
 <p>This dashboard simulates sentiment results from Reddit and X.</p>
