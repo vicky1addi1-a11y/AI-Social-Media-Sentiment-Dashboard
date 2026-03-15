@@ -10,8 +10,10 @@ def simulate_sentiment():
  reddit_posts = random.randint(50, 120)
  x_posts = random.randint(40, 100)
  return positive, neutral, negative, reddit_posts, x_posts
+ 
 class Handler(BaseHTTPRequestHandler):
-def do_GET(self):
+
+    def do_GET(self):
 parsed = urllib.parse.urlparse(self.path)
 params = urllib.parse.parse_qs(parsed.query)
 brand = params.get("brand", [""])[0]
