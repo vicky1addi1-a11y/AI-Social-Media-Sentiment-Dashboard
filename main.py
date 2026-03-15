@@ -50,24 +50,24 @@ class Handler(BaseHTTPRequestHandler):
            """
         else:
             content =  """
-            <html>
-            <head>
-            </head>
-            <title>AI Social Media Sentiment Dashboard</title>
+        <html>
+        <head>
+        </head>
+        <title>AI Social Media Sentiment Dashboard</title>
      
-            <body style="font-family:Arial; margin:40px; background:#f4f4f4">
+        <body style="font-family:Arial; margin:40px; background:#f4f4f4">
                       
-            <h1>AI Social Media Sentiment Dashboard</h1>
+        <h1>AI Social Media Sentiment Dashboard</h1>
          
-            <form method="GET">
-            <label>Enter Brand or Keyword</label><br><br>
-            <input type="text" name="brand" placeholder="Example: Nike" style="padding:8px; width:300px;">
-            <button type="submit" style="padding:8px;">Analyze</button>
-            </form>
-            <p>This dashboard simulates sentiment results from Reddit and X.</p>
-            </body>
-            </html>
-            """
+        <form method="GET">
+        <label>Enter Brand or Keyword</label><br><br>
+        <input type="text" name="brand" placeholder="Example: Nike" style="padding:8px; width:300px;">
+        <button type="submit" style="padding:8px;">Analyze</button>
+        </form>
+        <p>This dashboard simulates sentiment results from Reddit and X.</p>
+        </body>
+        </html>
+        """
         
       self.send_response(200)
       self.send_header("Content-type", "text/html")
