@@ -3,7 +3,6 @@ import random
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import urllib.parse
 
-# -------- DATA SIMULATION --------
 def simulate_sentiment():
     positive = random.randint(40, 70)
     neutral = random.randint(10, 30)
@@ -32,7 +31,6 @@ def simulate_sentiment():
     return positive, neutral, negative, reddit_posts, x_posts, weekly, reddit_samples, x_samples
 
 
-# -------- SERVER --------
 class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -46,23 +44,21 @@ class Handler(BaseHTTPRequestHandler):
             content = f"""
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body style="margin:0; font-family:Arial; background:#f4f6f9;">
 
-<!-- NAV -->
 <div style="background:#111827; color:white; padding:15px;">
 <h2 style="margin:0;">SentimentAI</h2>
 </div>
 
-<!-- MAIN -->
 <div style="max-width:900px; margin:auto; padding:20px;">
 
 <h2>Analysis for "{brand}"</h2>
 
-<!-- CARDS -->
 <div style="display:flex; gap:10px;">
 <div style="background:white; padding:10px; flex:1; border-radius:6px;">
 <b>Positive</b><br><span style="color:green;">{pos}%</span>
@@ -79,7 +75,6 @@ class Handler(BaseHTTPRequestHandler):
 
 <br>
 
-<!-- CHARTS -->
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
 
 <div style="background:white; padding:10px; border-radius:6px;">
@@ -98,7 +93,6 @@ class Handler(BaseHTTPRequestHandler):
 
 <br>
 
-<!-- POSTS -->
 <div style="display:flex; gap:10px;">
 <div style="background:white; padding:10px; flex:1; border-radius:6px;">
 <b>Reddit</b>
@@ -170,17 +164,16 @@ new Chart(document.getElementById('lineChart'), {{
             content = """
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Sentiment Dashboard</title>
 </head>
 
 <body style="margin:0; font-family:Arial; background:linear-gradient(to right, #1f2937, #3b82f6); color:white;">
 
-<!-- NAV -->
 <div style="padding:20px; font-size:20px; font-weight:bold;">
 SentimentAI
 </div>
 
-<!-- CENTER -->
 <div style="display:flex; justify-content:center; align-items:center; height:80vh;">
 
 <div style="
@@ -226,13 +219,11 @@ Powered by AI • Real-time insights
 """
 
         self.send_response(200)
-        self.send_header("Content-type", "text/html")
+        self.send_header("Content-type", "text/html; charset=utf-8")
         self.end_headers()
-        self.wfile.write(content.encode())
+        self.wfile.write(content.encode("utf-8"))
 
 
 port = int(os.environ.get("PORT", 10000))
-print("Server running on port", port)
-
 server = HTTPServer(("0.0.0.0", port), Handler)
 server.serve_forever()
