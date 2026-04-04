@@ -3,6 +3,7 @@ import random
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import urllib.parse
 
+# -------- DATA SIMULATION --------
 def simulate_sentiment():
     positive = random.randint(40, 70)
     neutral = random.randint(10, 30)
@@ -31,6 +32,7 @@ def simulate_sentiment():
     return positive, neutral, negative, reddit_posts, x_posts, weekly, reddit_samples, x_samples
 
 
+# -------- SERVER --------
 class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -55,19 +57,21 @@ class Handler(BaseHTTPRequestHandler):
 <h2 style="margin:0;">SentimentAI</h2>
 </div>
 
-<!-- MAIN CONTAINER -->
+<!-- MAIN -->
 <div style="max-width:900px; margin:auto; padding:20px;">
 
-<h2>Analysis: "{brand}"</h2>
+<h2>Analysis for "{brand}"</h2>
 
 <!-- CARDS -->
 <div style="display:flex; gap:10px;">
 <div style="background:white; padding:10px; flex:1; border-radius:6px;">
 <b>Positive</b><br><span style="color:green;">{pos}%</span>
 </div>
+
 <div style="background:white; padding:10px; flex:1; border-radius:6px;">
 <b>Neutral</b><br><span style="color:gray;">{neu}%</span>
 </div>
+
 <div style="background:white; padding:10px; flex:1; border-radius:6px;">
 <b>Negative</b><br><span style="color:red;">{neg}%</span>
 </div>
@@ -165,13 +169,58 @@ new Chart(document.getElementById('lineChart'), {{
         else:
             content = """
 <html>
-<head></head>
-<body style="font-family:Arial; text-align:center; margin-top:120px; background:#f4f6f9;">
-<h1>Sentiment Dashboard</h1>
+<head>
+<title>Sentiment Dashboard</title>
+</head>
+
+<body style="margin:0; font-family:Arial; background:linear-gradient(to right, #1f2937, #3b82f6); color:white;">
+
+<!-- NAV -->
+<div style="padding:20px; font-size:20px; font-weight:bold;">
+SentimentAI
+</div>
+
+<!-- CENTER -->
+<div style="display:flex; justify-content:center; align-items:center; height:80vh;">
+
+<div style="
+background:white;
+color:black;
+padding:40px;
+border-radius:12px;
+width:400px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+">
+
+<h1>AI Sentiment Dashboard</h1>
+
+<p style="color:gray;">
+Analyze sentiment from Reddit & X instantly
+</p>
+
 <form method="GET">
-<input name="brand" placeholder="Enter brand" style="padding:8px;">
-<button type="submit">Analyze</button>
+<input 
+type="text" 
+name="brand" 
+placeholder="Enter brand (Nike, Apple...)" 
+style="padding:12px; width:100%; border-radius:8px; border:1px solid #ccc; margin-bottom:15px;">
+
+<button 
+type="submit" 
+style="padding:12px; width:100%; background:#3b82f6; color:white; border:none; border-radius:8px;">
+Analyze
+</button>
 </form>
+
+<p style="font-size:12px; color:gray;">
+Powered by AI • Real-time insights
+</p>
+
+</div>
+
+</div>
+
 </body>
 </html>
 """
@@ -183,5 +232,7 @@ new Chart(document.getElementById('lineChart'), {{
 
 
 port = int(os.environ.get("PORT", 10000))
+print("Server running on port", port)
+
 server = HTTPServer(("0.0.0.0", port), Handler)
 server.serve_forever()
