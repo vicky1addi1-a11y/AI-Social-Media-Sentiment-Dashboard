@@ -1,0 +1,23 @@
+{
+  "pos": 58,
+  "neu": 22,
+  "neg": 20,
+  "reddit": 110,
+  "x": 95,
+  "posts": {
+    "reddit": [
+      "Tesla cars are innovative.",
+      "Build quality could improve.",
+      "Love the autopilot.",
+      "Charging takes time.",
+      "Future of EVs."
+    ],
+    "x": [
+      "Tesla stock up!",
+      "Not impressed with service.",
+      "Elon always trending.",
+      "Great tech.",
+      "Needs better reliability."
+    ]
+  }
+}
