@@ -1,1 +1,23 @@
-
+{
+  "pos": 62,
+  "neu": 23,
+  "neg": 15,
+  "reddit": 102,
+  "x": 88,
+  "posts": {
+    "reddit": [
+      "Love these sneakers!",
+      "Great comfort and style.",
+      "Shipping took too long.",
+      "Best running shoes.",
+      "Worth the price."
+    ],
+    "x": [
+      "Nike is trending 🔥",
+      "Not impressed honestly.",
+      "Pretty solid brand.",
+      "Needs improvement.",
+      "Love it!"
+    ]
+  }
+}
