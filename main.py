@@ -4,6 +4,7 @@ import urllib.parse
 import json
 import random
 
+# ---------- LOAD JSON OR FALLBACK ----------
 def load_data(brand):
     filename = f"{brand}_data.json"
 
@@ -30,6 +31,7 @@ def load_data(brand):
         }
     }
 
+# ---------- HANDLER ----------
 class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -152,27 +154,35 @@ canvas {{
 
 <script>
 new Chart(document.getElementById('pie'), {{
-type: 'pie',
-data: {{
-labels: ['Positive','Neutral','Negative'],
-datasets: [{{data: [{data['pos']},{data['neu']},{data['neg']}]}]
-}}
+    type: 'pie',
+    data: {{
+        labels: ['Positive','Neutral','Negative'],
+        datasets: [{{
+            data: [{data['pos']},{data['neu']},{data['neg']}]
+        }}]
+    }}
 }});
 
 new Chart(document.getElementById('bar'), {{
-type: 'bar',
-data: {{
-labels: ['Reddit','X'],
-datasets: [{{label: 'Posts', data: [{data['reddit']},{data['x']}]}]
-}}
+    type: 'bar',
+    data: {{
+        labels: ['Reddit','X'],
+        datasets: [{{
+            label: 'Posts',
+            data: [{data['reddit']},{data['x']}]
+        }}]
+    }}
 }});
 
 new Chart(document.getElementById('trend'), {{
-type: 'line',
-data: {{
-labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-datasets: [{{label: 'Trend', data: [60,50,45,42,48,66,51]}}]
-}}
+    type: 'line',
+    data: {{
+        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        datasets: [{{
+            label: 'Trend',
+            data: [60,50,45,42,48,66,51]
+        }}]
+    }}
 }});
 
 function downloadReport() {{
@@ -250,6 +260,10 @@ button {
         self.end_headers()
         self.wfile.write(content.encode("utf-8"))
 
+# ---------- RUN ----------
 port = int(os.environ.get("PORT", 10000))
 server = HTTPServer(("0.0.0.0", port), Handler)
+
+print("Running on port", port)
+
 server.serve_forever()
