@@ -4,7 +4,6 @@ import urllib.parse
 import json
 import random
 
-# ---------- LOAD JSON OR FALLBACK ----------
 def load_data(brand):
     filename = f"{brand}_data.json"
 
@@ -15,7 +14,6 @@ def load_data(brand):
         except:
             pass
 
-    # fallback if file missing
     pos = random.randint(40, 70)
     neu = random.randint(10, 30)
     neg = 100 - pos - neu
@@ -27,12 +25,11 @@ def load_data(brand):
         "reddit": random.randint(50, 120),
         "x": random.randint(40, 100),
         "posts": {
-            "reddit": ["Sample Reddit post", "User feedback here"],
+            "reddit": ["Sample post", "User feedback"],
             "x": ["Trending topic", "Quick reaction"]
         }
     }
 
-# ---------- HANDLER ----------
 class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -46,49 +43,50 @@ class Handler(BaseHTTPRequestHandler):
             content = f"""
 <html>
 <head>
-<title>Sentiment Dashboard</title>
+<title>Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 body {{
     font-family: Arial;
+    background: linear-gradient(to right, #4f46e5, #3b82f6);
     margin: 0;
-    background: #f5f7fb;
 }}
 
 .container {{
-    max-width: 1100px;
-    margin: auto;
-    padding: 20px;
-}}
-
-.card {{
+    max-width: 1000px;
+    margin: 40px auto;
     background: white;
-    padding: 15px;
+    padding: 20px;
     border-radius: 10px;
-    margin: 10px 0;
-}}
-
-.row {{
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}}
-
-.box {{
-    flex: 1;
-    min-width: 150px;
-    text-align: center;
 }}
 
 h1 {{
     text-align: center;
 }}
 
+.row {{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}}
+
+.card {{
+    flex: 1;
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}}
+
+.section {{
+    margin-top: 20px;
+}}
+
 button {{
-    padding: 8px 12px;
-    border-radius: 5px;
+    padding: 10px;
     border: none;
+    border-radius: 5px;
     background: #4f46e5;
     color: white;
     cursor: pointer;
@@ -96,16 +94,17 @@ button {{
 
 .brand-btn {{
     margin: 5px;
-    background: #111827;
+    background: black;
 }}
 
 canvas {{
-    max-height: 250px !important;
+    max-height: 250px;
 }}
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
 <h1>{brand.upper()} Sentiment Dashboard</h1>
@@ -116,39 +115,34 @@ canvas {{
 <a href="/?brand=tesla"><button class="brand-btn">Tesla</button></a>
 </div>
 
-<div class="row">
-<div class="card box">Positive<br><b>{data['pos']}%</b></div>
-<div class="card box">Neutral<br><b>{data['neu']}%</b></div>
-<div class="card box">Negative<br><b>{data['neg']}%</b></div>
+<div class="row section">
+<div class="card">Positive<br><b>{data['pos']}%</b></div>
+<div class="card">Neutral<br><b>{data['neu']}%</b></div>
+<div class="card">Negative<br><b>{data['neg']}%</b></div>
 </div>
 
-<div class="row">
-<div class="card">
-<canvas id="pie"></canvas>
+<div class="row section">
+<div class="card"><canvas id="pie"></canvas></div>
+<div class="card"><canvas id="bar"></canvas></div>
 </div>
 
-<div class="card">
-<canvas id="bar"></canvas>
-</div>
-</div>
-
-<div class="card">
+<div class="card section">
 <canvas id="trend"></canvas>
 </div>
 
-<div class="row">
+<div class="row section">
 <div class="card">
 <h3>Reddit</h3>
-{"".join(f"<p>• {p}</p>" for p in data["posts"]["reddit"])}
+{"".join(f"<p>- {p}</p>" for p in data["posts"]["reddit"])}
 </div>
 
 <div class="card">
 <h3>X</h3>
-{"".join(f"<p>• {p}</p>" for p in data["posts"]["x"])}
+{"".join(f"<p>- {p}</p>" for p in data["posts"]["x"])}
 </div>
 </div>
 
-<div class="card" style="text-align:center;">
+<div class="section" style="text-align:center;">
 <button onclick="downloadReport()">Download Report</button>
 <br><br>
 <a href="/">Back</a>
@@ -161,9 +155,7 @@ new Chart(document.getElementById('pie'), {{
 type: 'pie',
 data: {{
 labels: ['Positive','Neutral','Negative'],
-datasets: [{{
-data: [{data['pos']},{data['neu']},{data['neg']}]
-}}]
+datasets: [{{data: [{data['pos']},{data['neu']},{data['neg']}]}]
 }}
 }});
 
@@ -171,10 +163,7 @@ new Chart(document.getElementById('bar'), {{
 type: 'bar',
 data: {{
 labels: ['Reddit','X'],
-datasets: [{{
-label: 'Posts',
-data: [{data['reddit']},{data['x']}]
-}}]
+datasets: [{{label: 'Posts', data: [{data['reddit']},{data['x']}]}]
 }}
 }});
 
@@ -182,10 +171,7 @@ new Chart(document.getElementById('trend'), {{
 type: 'line',
 data: {{
 labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-datasets: [{{
-label: 'Trend',
-data: [60,50,45,42,48,66,51]
-}}]
+datasets: [{{label: 'Trend', data: [60,50,45,42,48,66,51]}}]
 }}
 }});
 
@@ -206,42 +192,54 @@ function downloadReport() {{
             content = """
 <html>
 <head>
-<title>AI Sentiment Dashboard</title>
+<title>AI Dashboard</title>
 
 <style>
 body {
     font-family: Arial;
     background: linear-gradient(to right, #4f46e5, #3b82f6);
-    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
     text-align: center;
-    padding-top: 100px;
 }
 
 input {
     padding: 10px;
     width: 250px;
-    border-radius: 5px;
-    border: none;
+    margin: 10px;
 }
 
 button {
     padding: 10px;
-    border-radius: 5px;
-    background: black;
+    background: #4f46e5;
     color: white;
+    border: none;
 }
 </style>
 </head>
 
 <body>
 
-<h1>AI Social Media Sentiment</h1>
-<p>Analyze brand sentiment across Reddit & X</p>
+<div class="card">
+<h2>AI Sentiment Dashboard</h2>
+<p>Analyze sentiment from Reddit & X</p>
 
 <form method="GET">
-<input name="brand" placeholder="nike, apple, tesla">
+<input name="brand" placeholder="Nike, Apple, Tesla">
+<br>
 <button>Analyze</button>
 </form>
+
+</div>
 
 </body>
 </html>
@@ -252,10 +250,6 @@ button {
         self.end_headers()
         self.wfile.write(content.encode("utf-8"))
 
-# ---------- RUN ----------
 port = int(os.environ.get("PORT", 10000))
 server = HTTPServer(("0.0.0.0", port), Handler)
-
-print("Running on port", port)
-
 server.serve_forever()
