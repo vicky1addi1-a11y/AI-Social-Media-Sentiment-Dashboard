@@ -1,0 +1,23 @@
+{
+  "pos": 55,
+  "neu": 30,
+  "neg": 15,
+  "reddit": 90,
+  "x": 75,
+  "posts": {
+    "reddit": [
+      "MacBooks are amazing.",
+      "Too expensive.",
+      "Battery life is great.",
+      "iOS is smooth.",
+      "Overpriced but worth it."
+    ],
+    "x": [
+      "New iPhone hype!",
+      "Not worth upgrading.",
+      "Camera is 🔥",
+      "Apple doing well.",
+      "Mixed opinions."
+    ]
+  }
+}
