@@ -14,7 +14,7 @@ Requirements:
     pip install requests
 
 Usage:
-    1. Make sure Ollama is running: ollama run gemma4:e4b-it-q8_0
+    1. Make sure Ollama is running: ollama run gemma4:e4b-it-q4_0
     2. Edit SUBREDDITS and KEYWORD below to match your client
     3. Run: python3 reddit_scraper.py
 """
