@@ -1,7 +1,7 @@
 """
 Reddit Sentiment Scraper — Team 1 Prototype (v4)
 Uses Reddit's public .json endpoint (no API credentials required)
-Sentiment analysis via Ollama + gemma4:e4b-it-q8_0 running locally
+Sentiment analysis via Ollama + gemma4:e4b-it-q4_0 running locally
 
 CHANGES FROM v3:
   - Fixed DeprecationWarning: datetime.utcfromtimestamp replaced with
